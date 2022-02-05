@@ -2,6 +2,7 @@ import os, os.path
 import datetime
 import time
 import pyexiv2
+import sys
 
 
 def modify_date(folder="images"):
@@ -25,4 +26,7 @@ def modify_date(folder="images"):
 
 
 if __name__ == "__main__":
-    modify_date()
+    folder = "images"
+    if len(sys.argv) > 1:
+        folder = sys.argv[1]
+    modify_date(folder)
