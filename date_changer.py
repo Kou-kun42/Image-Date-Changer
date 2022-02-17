@@ -24,9 +24,30 @@ def modify_date(folder="images"):
             print("Changing modified date from", time.ctime(os.path.getmtime(fullpath)), "to", time.ctime(new_time))
             os.utime(fullpath, (new_time, new_time))
 
+def modify_filename(folder="asdf"):
+    file_paths = os.listdir(folder)
+
+    for file_path in file_paths:
+        if file_path[0] != ".":
+            print("Processing file: ", file_path)
+            ext = file_path.split(".")[-1]
+            fullpath = f"{folder}/{file_path}"
+
+            epoch_time = os.path.getmtime(fullpath)
+            dt = str(datetime.datetime.fromtimestamp(epoch_time)).split(' ')
+            year, month, day = dt[0].split('-')
+            hour, minute, second = dt[1].split(':')
+            d = year + month + day
+            t = hour + minute + second
+            new_name = f"{folder}/vid_{d}_{t}.{ext}"
+
+            os.rename(fullpath, new_name)
+
+
+
 
 if __name__ == "__main__":
     folder = "images"
     if len(sys.argv) > 1:
         folder = sys.argv[1]
-    modify_date(folder)
+    modify_filename(folder)
